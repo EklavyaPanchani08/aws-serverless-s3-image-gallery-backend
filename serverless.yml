@@ -1,0 +1,42 @@
+org: eklvy
+app: image-gallery
+service: image-gallery
+
+provider: 
+  name: aws
+  runtime: nodejs18.x
+  httpApi:
+    cors:
+      allowedOrigins:
+        - "*"
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+
+functions: 
+  imageUpload:
+    handler: imageUpload.handler
+    events: 
+      - httpApi: 
+          path: /image-gallery-upload
+          method: POST
+          cors: true
+  getImages:
+    handler: getImages.handler
+    events:
+     - httpApi:
+        path: /image-gallery-get
+        method: GET
+  deleteImage:
+    handler: deleteImage.handler
+    events: 
+      - httpApi: 
+          path: /image-gallery-delete
+          method: DELETE
+          cors: true
